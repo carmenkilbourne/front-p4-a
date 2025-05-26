@@ -26,9 +26,10 @@ export default function LikeButton(
       setIsLoading(true);
       setError("");
 
-      await axios.delete(`${API_BASE_URL}/api/posts/${postId}/like`, {
+      await axios.post(`${API_BASE_URL}/api/posts/${postId}/like`, {
         headers: {
           "Content-Type": "application/json",
+          "Accept":"*/*"
         },
       });
 

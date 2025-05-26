@@ -5,6 +5,7 @@ import {
   hasValidationErrors,
   isApiResponseError,
 } from "../../models/api_response.ts";
+import { useState } from "preact/hooks/src/index.d.ts";
 
 interface FormDataError {
   title?: string;
@@ -18,25 +19,29 @@ function isValidFormDataKey(key: string): key is keyof FormDataError {
 }
 
 export const handler: Handlers = {
-  async POST(_req, ctx) {
-    const form = await _req.formData();
-    const titulo = form.get("titulo");
-    const contenido = form.get("contenido");
-    const autor = form.get("autor");
-    const portada = form.get("portada");
+
+  async POST(req:Request, ctx) {
+
+    const form = await req.formData();
+    const title = form.get("title")?.toString();
+    const content = form.get("content")?.toString();
+    const author = form.get("author")?.toString();
+    const cover = form.get("cover")?.toString();
 
     try {
-      await axios.patch(`${API_BASE_URL}/api/posts`, {
-        titulo,
-        contenido,
-        autor,
-        portada,
-      });
+      const response=await axios.post<FormDataError>(`${API_BASE_URL}/api/posts`,
+        {
+        title:title,
+        content:content,
+        author:author,
+        cover:cover
+      }
+    );
       const headers = new Headers();
       headers.set("location", "/");
       return new Response(null, {
         headers,
-        status: 302,
+        status: 303,
       });
     } catch (error) {
       const axiosError = error as AxiosError;
@@ -146,12 +151,17 @@ export default function Create({ data }: PageProps) {
         </div>
 
         <div className="form-actions">
+          <a href="/">
           <button type="submit" className="submit-button">
             Publicar Post
           </button>
+          </a>
+          <a href="/">
           <button type="button" className="cancel-button">
             Cancelar
           </button>
+          </a>
+          
         </div>
       </form>
     </div>
