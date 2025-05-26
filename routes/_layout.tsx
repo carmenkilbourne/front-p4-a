@@ -16,7 +16,7 @@ export default function Layout({ Component }: PageProps) {
       <header className="header">
         <div className="container">
           <div className="logo">
-            <a href="#">El Blog de {OWNER}</a>
+            <a href="/">El Blog de {OWNER}</a>
           </div>
           <nav className="nav">
             <a href="/" className="nav-link">Inicio</a>

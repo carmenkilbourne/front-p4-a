@@ -35,7 +35,7 @@ export const handler: Handlers = {
     }
     
     try {
-      await axios.patch(
+      await axios.post(
         `${API_BASE_URL}/api/posts/${ctx.params.id}/comments`,
         { author, content },
         { headers: { 'Content-Type': 'application/json' } }
@@ -43,7 +43,7 @@ export const handler: Handlers = {
       
       // Redirigir a la misma página para ver el nuevo comentario
       const headers = new Headers();
-      headers.set('location', `${API_BASE_URL}/post/${ctx.params.id}`);
+      headers.set('location', `/post/${ctx.params.id}`);
       return new Response(null, {
         status: 303, // See Other
         headers,
