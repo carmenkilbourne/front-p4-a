@@ -9,7 +9,7 @@ interface LikeButtonProps {
   isLiked?: boolean;
 }
 
-export default function LikeButton(
+export default function DeleteButton(
   { postId, initialLikes, isLiked = false }: LikeButtonProps,
 ) {
   const [isLoading, setIsLoading] = useState(false);

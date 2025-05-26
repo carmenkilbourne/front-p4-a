@@ -10,7 +10,7 @@ export const handler: Handlers = {
   async GET(_req, ctx) {
     try {
       const { data } = await axios.get<ApiResponseSuccess<Post[]>>(
-        `${API_BASE_URL}/api/post`,
+        `${API_BASE_URL}/api/posts`,
       );
       return ctx.render({ posts: data.data.posts });
     } catch (_) {
