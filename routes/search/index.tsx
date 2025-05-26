@@ -10,12 +10,12 @@ export const handler: Handlers = {
     try {
       const { url } = _req;
       const searchParams = new URL(url).searchParams;
-      const query = searchParams.get("query");
-      if (!query || query.trim() === "") {
-        return ctx.render({ posts: [], query });
+      const search = searchParams.get("search");
+      if (!search || search.trim() === "") {
+        return ctx.render({ posts: [], search });
       }
       const { data } = await axios.get<ApiResponseSuccess<Post[]>>(
-        `${API_BASE_URL}/api/posts?query=${query}`,
+        `${API_BASE_URL}/api/posts?search=${search}`,
       );
       return ctx.render({ posts: data.data.posts });
     } catch (_) {
@@ -27,14 +27,14 @@ export const handler: Handlers = {
 interface SearchProps {
   data: {
     posts: Post[];
-    query?: string;
+    search?: string;
   };
 }
 
 export default function Search({ data }: SearchProps) {
-  const { posts, query = "" } = data;
+  const { posts, search } = data;
   const hasResults = posts.length > 0;
-  const searchTerm = query || "";
+  const searchTerm = search || "";
 
   return (
     <div className="search-container">

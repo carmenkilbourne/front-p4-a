@@ -43,7 +43,7 @@ export const handler: Handlers = {
       
       // Redirigir a la misma página para ver el nuevo comentario
       const headers = new Headers();
-      headers.set('location', `/post/${ctx.params.id}`);
+      headers.set('location', `${API_BASE_URL}/post/${ctx.params.id}`);
       return new Response(null, {
         status: 303, // See Other
         headers,
@@ -105,9 +105,9 @@ export default function PostDetail({ data }: PostProps) {
       ? new Date(dateString)
       : dateString;
     const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     };
     return date.toLocaleDateString("es-ES", options);
   };
@@ -116,8 +116,8 @@ export default function PostDetail({ data }: PostProps) {
     <div className="post-detail">
       {/* Portada del post */}
       <PostCover
-        src={post.portada}
-        alt={`Imagen de portada para: ${post.titulo}`}
+        src={post.cover}
+        alt={`Imagen de portada para: ${post.title}`}
         width={1200}
         height={400}
       />
@@ -125,17 +125,17 @@ export default function PostDetail({ data }: PostProps) {
       <div className="post-container">
         {/* Cabecera del post */}
         <header className="post-header">
-          <h1 className="post-title">{post.titulo}</h1>
+          <h1 className="post-title">{post.title}</h1>
           <div className="post-meta">
-            <span className="post-author">Por {post.autor}</span>
-            <span className="post-date">{formatDate(post.created_at)}</span>
+            <span className="post-author">Por {post.author}</span>
+            <span className="post-date">{formatDate(post.createdAt)}</span>
           </div>
         </header>
 
         {/* Contenido del post */}
         <article className="post-content">
           <div className="post-text">
-            {post.contenido.split("\n").map((paragraph, index) => (
+            {post.content.split("\n").map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
